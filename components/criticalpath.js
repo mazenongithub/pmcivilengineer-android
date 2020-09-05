@@ -480,10 +480,10 @@ class CriticalPath {
                     {pathmenu()}
 
                     <ScrollView horizontal={true}>
-                        <Svg width={0.5*interval} height={0.5*(yext + 200)} viewBox={`0 0 ${interval} ${yext + 200}`}>
+                        <Svg width={interval} height={(yext + 200)} viewBox={`0 0 ${interval} ${yext + 200}`}>
                             <G>
                                 <G>
-                                    {grid}
+                             
                                     {showlabels()}
                                     <Polyline strokeWidth="1" stroke="rgb(0,0,0)" points={`2.5 0.38 2.5 ${yext} ${interval} ${yext}`} />
                                     {criticalpath.showmilestones.call(this)}
