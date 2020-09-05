@@ -1,12 +1,33 @@
 import React from 'react';
 import { Dimensions, View, TouchableOpacity, Image, Text } from 'react-native';
 import { MyStylesheet } from './styles';
-import { inputUTCStringForLaborID, returnCompanyList, sorttimes, sortpart, getDateInterval, getScale, calculatemonth, calculateday, calculateyear } from './functions'
+import { inputUTCStringForLaborID, returnCompanyList, sorttimes, sortpart, getDateInterval, getScale, calculatemonth, calculateday, calculateyear, calculateFloat, getDateTime,checkemptyobject} from './functions'
 import { SaveAllProfile, AppleLogin, CheckUserNode, LoadCSIs } from './actions/api'
 import * as GoogleSignIn from 'expo-google-sign-in';
 import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
 
 class PM {
+
+    getfloatbymilestoneid(milestoneid) {
+        const pm = new PM();
+        const paths = pm.getpaths.call(this)
+        let float = 0;
+        let i = 0;
+        for (let mypath in paths[milestoneid]['paths']) {
+
+            let floatcheck = paths[milestoneid]['paths'][mypath]['float']
+
+            if (floatcheck < float || i === 0) {
+                float = floatcheck
+
+            }
+
+            i += 1;
+        }
+        return float;
+
+    }
+
 
      
 
@@ -1285,6 +1306,20 @@ getengineering(projectid) {
 
 
         })
+    }
+
+    let milestone_1 = "";
+    let milestone_2 = "";
+    for (let myprop in paths) {
+        milestone_1 = getmilestonebyid(paths, myprop)
+
+
+        for (let mypath in paths[myprop]['paths']) {
+            milestone_2 = getmilestonebyid(paths, mypath)
+            let float = calculateFloat(milestone_1.completion, milestone_2.start)
+            paths[myprop]['paths'][mypath]['float'] = float
+        }
+
     }
 
         return paths;

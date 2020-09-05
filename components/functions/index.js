@@ -820,3 +820,29 @@ export function calculatetotalhours(timeout, timein) {
     return totalhours;
 }
 
+export function checkemptyobject(obj) {
+    let empty = true;
+    // eslint-disable-next-line
+    for(let x in obj) {
+      empty = false;
+      
+    }
+    
+   return empty; 
+  }
+
+export function getDateTime (datestr)  {
+    let offset = getOffsetDate(datestr)
+    let datein = new Date(`${datestr.replace(/-/g, '/')} 00:00:00${offset}`)
+    return datein.getTime();
+  }
+
+
+export function calculateFloat (day_1, day_2) {
+    const date_1 =new Date(`${day_1.replace(/-/g, '/')} 00:00:00${getOffsetDate(day_1)}`)
+    const date_2 =new Date(`${day_2.replace(/-/g, '/')} 00:00:00${getOffsetDate(day_2)}`)
+    const time = date_2.getTime() - date_1.getTime();
+    return Math.round(time/(1000*60*60*24))
+    
+  }
+
