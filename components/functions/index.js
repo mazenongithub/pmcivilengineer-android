@@ -123,6 +123,12 @@ export function increasedatebyoneday(timein) {
     return (`${year}-${month}-${day}`)
 }
 
+export function getDateTime (datestr)  {
+    let offset = getOffsetDate(datestr)
+    let datein = new Date(`${datestr.replace(/-/g, '/')} 00:00:00${offset}`)
+    return datein.getTime();
+  }
+
 
 
 export function calculateday(int, compl, start, completion) {
@@ -165,13 +171,41 @@ export function calculateyear(int, compl, start, completion) {
     return { width, xo }
 }
 
+export function checkemptyobject(obj) {
+    let empty = true;
+    // eslint-disable-next-line
+    for(let x in obj) {
+      empty = false;
+      
+    }
+    
+   return empty; 
+  }
+
+export function calculateFloat (day_1, day_2) {
+    const date_1 =new Date(`${day_1.replace(/-/g, '/')} 00:00:00${getOffsetDate(day_1)}`)
+    const date_2 =new Date(`${day_2.replace(/-/g, '/')} 00:00:00${getOffsetDate(day_2)}`)
+    const time = date_2.getTime() - date_1.getTime();
+    return Math.round(time/(1000*60*60*24))
+    
+  }
+
+export function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
 
 export function getScale(interval) {
 
     let scale = "";
-    if (interval < 30) {
+    if (interval < 120) {
         scale = "day"
-    } else if (interval <= 730) {
+    } else if (interval <= 1200) {
         scale = "month"
     } else {
         scale = "year"
