@@ -300,6 +300,8 @@ class CriticalPath {
         const regularFont = pm.getRegularFont.call(this)
         const milestones = pm.getmilestones.call(this);
         const milestoneid = new MilestoneID();
+        let auditmilestones = "";
+        auditmilestones += pm.auditmilestones.call(this,milestones)
         let yext = 200;
         if (milestones) {
             if (milestones.length) {
@@ -354,6 +356,14 @@ class CriticalPath {
                     </View>
                 )
             }
+        }
+
+        const auditmessage = (message) => {
+            if(message) {
+                return(<View style={{...styles.generalFont, ...styles.redFont,...styles.bottomMargin15}}><Text style={{...regularFont,...styles.redFont}}>{message}</Text></View>)
+            }
+
+
         }
 
 
@@ -474,7 +484,7 @@ class CriticalPath {
 
             <View style={{ ...styles.generalFlex }}>
                 <View style={{ ...styles.flex1 }}>
-
+                {auditmessage(auditmilestones)}
                     {activemilestone()}
 
                     {pathmenu()}

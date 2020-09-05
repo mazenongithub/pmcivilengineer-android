@@ -75,6 +75,9 @@ export function MyStylesheet() {
         marginRight10:{
             marginRight:10
         },
+        redFont: {
+            color:'red'
+        },
         underline: {textDecorationLine: 'underline'},
         bottomMargin30: {
             marginBottom: 30

@@ -484,6 +484,60 @@ class PM {
 
 
     }
+
+    auditmilestones(milestones) {
+
+
+        const getmilestonebyid = (milestones, milestoneid) => {
+
+            let mymilestone = false;
+            if (milestones) {
+                // eslint-disable-next-line
+                milestones.map(milestone => {
+
+                    if (milestone.milestoneid === milestoneid) {
+
+                        mymilestone = milestone;
+                    }
+
+                })
+
+            }
+
+            return mymilestone;
+        }
+
+        let message = "";
+        // eslint-disable-next-line
+        if(milestones) {
+        milestones.map(milestone => {
+            let start = milestone.start;
+            // let completion = milestone.completion;
+            // message += `${start} ${completion}`
+
+            if (milestone.hasOwnProperty("predessors")) {
+                // eslint-disable-next-line
+                milestone.predessors.map(predessor => {
+                    let mypredessor = getmilestonebyid(milestones, predessor.predessor);
+                    //let predessorstart = mypredessor.start;
+                    let predessorcompletion = mypredessor.completion;
+                    if (getDateTime(start) < getDateTime(predessorcompletion)) {
+                        message += `${milestone.milestone} cannot start before ${mypredessor.milestone} completion `
+                    }
+
+                })
+
+            }
+
+        })
+
+    }
+
+
+        return message;
+    }
+
+
     showsaveprofile() {
         const styles = MyStylesheet();
         const pm = new PM();
@@ -542,6 +596,14 @@ class PM {
                     if (myproject.hasOwnProperty("invalid")) {
                         validate.validate = false;
                         validate.message += this.state.message
+                    }
+
+                    if (myproject.hasOwnProperty("projectmilestones")) {
+                        let auditmilestones = pm.auditmilestones.call(this, myproject.projectmilestones.mymilestone)
+                        if (auditmilestones) {
+                            validate.validate = false;
+                            validate.message += auditmilestones;
+                        }
                     }
 
 
