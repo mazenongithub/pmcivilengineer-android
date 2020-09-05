@@ -1433,7 +1433,7 @@ getengineering(projectid) {
                 this.setState({ googlepay: true })
             }
         } catch (err) {
-            alert(err)
+            alert(`Could not connect to Google Pay for Payments`)
         }
 
     }
