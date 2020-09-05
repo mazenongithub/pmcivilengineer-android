@@ -1185,6 +1185,58 @@ getengineering(projectid) {
 
     }
 
+    checkemptypathsbymilestoneid(milestoneid) {
+        const pm = new PM();
+        const paths = pm.getpaths.call(this)
+        const path = paths[milestoneid];
+        let empty = false;
+        if(checkemptyobject(path.paths)) {
+           empty  = true;
+        }
+        return empty; 
+        }
+
+    
+    calcTotalProjectFloat(milestoneid) {
+        const pm = new PM();
+        const paths = pm.getpaths.call(this)
+        let checkcalc = true
+        let window = {};
+        let i =0;
+        let activemilestoneid = milestoneid;
+        while(checkcalc) {
+       
+       
+          window[`checkfloat_${i.toString()}`] = 0;
+              
+              
+              let j = 0;
+               checkcalc = false;
+               for (window[`mypath_${i.toString()}`] in paths[activemilestoneid]['paths']) {
+                   
+                if(!pm.checkemptypathsbymilestoneid.call(this,window[`mypath_${i.toString()}`])) {
+                  checkcalc = true 
+                 }
+                    
+                
+                    if (j === 0 || window[`checkfloat_${i.toString()}`] > pm.getfloatbymilestoneid.call(this, window[`mypath_${i.toString()}`])) {
+                       window[`checkfloat_${i.toString()}`] = pm.getfloatbymilestoneid.call(this, window[`mypath_${i.toString()}`])
+                       activemilestoneid = window[`mypath_${i.toString()}`]
+                   }
+                j+=1
+              }
+          
+               i+=1;
+        
+        }
+       let float = pm.getfloatbymilestoneid.call(this, milestoneid)
+       let projectfloat = 0;
+       for(let k=0;k<i;k++) {
+         projectfloat+= Number(window[`checkfloat_${k.toString()}`])
+       }
+       return float + projectfloat
+       }
+
     getpaths() {
         const pm = new PM();
         const milestones = pm.getmilestones.call(this)
