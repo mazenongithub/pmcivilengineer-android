@@ -27,7 +27,7 @@ class CriticalPath {
 
                 // eslint-disable-next-line
                 milestone.predessors.map(predessor => {
-                    let milestoneid = predessor.predessoremoveIconr;
+                    let milestoneid = predessor.predessor
                     let type = predessor.type;
                     if (type === 'start-to-start') {
                         let mymilestone = pm.getmilestonebyid.call(this, milestoneid)
@@ -121,7 +121,7 @@ class CriticalPath {
                     if (type === 'start-to-finish') {
                         let mymilestone = pm.getmilestonebyid.call(this, milestoneid)
                         jsx.push(
-                            <View style={{ ...styles.generalFlex, ...styles.bottomMargin15 }} key={`predessor${milestoneid}`}>
+                            <View style={{ ...styles.generalFlex, ...styles.bottomMargin15 }} key={`predessor${milestoneid}${this.state.activemilestoneid}`}>
                                 <View style={{ ...styles.flex2 }}>
                                     <Text style={{ ...regularFont, ...styles.generalFont }}>{mymilestone.milestone}</Text>
                                 </View>

@@ -13,6 +13,7 @@ class PM {
         const paths = pm.getpaths.call(this)
         let float = 0;
         let i = 0;
+        if(paths) {
         for (let mypath in paths[milestoneid]['paths']) {
 
             let floatcheck = paths[milestoneid]['paths'][mypath]['float']
@@ -24,6 +25,9 @@ class PM {
 
             i += 1;
         }
+
+    }
+    
         return float;
 
     }

@@ -138,12 +138,12 @@ const milestone = new Milestone();
   handlemilestones(projectid) {
     this.props.reduxNavigation({ navigation: 'milestones' })
     this.props.reduxProject({ projectid })
-    this.setState({ message: "" })
+    this.setState({ activemilestoneid:false })
   }
 
   handleproposals(projectid) {
     this.props.reduxNavigation({ navigation: 'proposals' })
-    this.props.reduxProject({ projectid })
+    this.props.reduxProject({ projectid }) 
     this.setState({ message: "" })
   }
 
