@@ -119,7 +119,7 @@ class Milestone {
         const pm = new PM();
         const milestone = new Milestone();
         if (this.state.activemilestoneid === milestoneid) {
-            this.setState({ activemilestoneid: false })
+            this.setState({ activemilestoneid: false, milestone:'' })
             milestone.reset.call(this)
         } else {
             const milestone = pm.getmilestonebyid.call(this, milestoneid)
@@ -140,17 +140,42 @@ class Milestone {
             this.setState({ activemilestoneid: milestoneid, startdateday, startdatemonth, startdateyear, completiondateday, completiondateyear, completiondatemonth })
         }
     }
-    confirmremovemilestone(mymilestone) {
+    confirmremovemilestone(milestone) {
         const pm = new PM();
         const params = pm.getactiveparams.call(this);
         const myuser = pm.getuser.call(this)
-        if(myuser) {
-        const i = pm.getprojectkeybyid.call(this,params.projectid)
-        const j = pm.getmilestonekeybyid.call(this,mymilestone.milestoneid);
-           
-                myuser.projects.myproject[i].projectmilestones.mymilestone.splice(j, 1);
-                this.props.reduxUser(myuser)
-                this.setState({ activemilestoneid: false })
+        if (myuser) {
+            const project = pm.getprojectbyid.call(this, params.projectid)
+
+            if (project) {
+                const i = pm.getprojectkeybyid.call(this, params.projectid)
+                const checkmilestone = pm.getmilestonebyid.call(this, milestone.milestoneid)
+                if (checkmilestone) {
+
+                    const j = pm.getmilestonekeybyid.call(this, milestone.milestoneid);
+                    myuser.projects.myproject[i].projectmilestones.mymilestone.splice(j, 1);
+                    // eslint-disable-next-line
+                    myuser.projects.myproject[i].projectmilestones.mymilestone.map(mymilestone => {
+
+                        if (mymilestone.hasOwnProperty("predessors")) {
+
+                            // eslint-disable-next-line
+                            mymilestone.predessors.map(predessor => {
+                                if (predessor.predessor === milestone.milestoneid) {
+                                    const k = pm.getmilestonekeybyid.call(this, mymilestone.milestoneid);
+                                    const l = pm.getpredessorkeybyid.call(this, mymilestone, predessor.predessor);
+                                    myuser.projects.myproject[i].projectmilestones.mymilestone[k].predessors.splice(l, 1)
+                                }
+                            })
+                        }
+                    })
+
+                    this.props.reduxUser(myuser)
+                    this.setState({ activemilestoneid: false })
+
+                }
+
+            }
 
         }
 

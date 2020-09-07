@@ -133,12 +133,12 @@ const milestone = new Milestone();
   handleteam(projectid) {
     this.props.reduxNavigation({ navigation: 'team' })
     this.props.reduxProject({ projectid })
-    this.setState({ message: "" })
+    this.setState({ activeprovider:false,activeengineer:false, search:'', design:'' })
   }
   handlemilestones(projectid) {
     this.props.reduxNavigation({ navigation: 'milestones' })
     this.props.reduxProject({ projectid })
-    this.setState({ activemilestoneid:false })
+    this.setState({ activemilestoneid:false, milestonefinish:''})
   }
 
   handleproposals(projectid) {
