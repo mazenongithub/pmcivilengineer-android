@@ -479,8 +479,28 @@ class CriticalPath {
             }
         }
 
+    
+
+        const scaleinterval = (interval) => {
+            interval = interval / 200;
+            let scale = 1;
+            if(interval > 20) {
+                scale = 0.5
+            }
+
+            if(interval > 40) {
+                scale = 0.25
+            }
+
+            if(interval > 60) {
+                scale = 0.125
+            }
+            
+            
+            return scale;
 
 
+        }
         return (
 
             <View style={{ ...styles.generalFlex }}>
@@ -491,7 +511,7 @@ class CriticalPath {
                     {pathmenu()}
 
                     <ScrollView horizontal={true}>
-                        <Svg width={interval} height={(yext + 200)} viewBox={`0 0 ${interval} ${yext + 200}`}>
+                        <Svg width={scaleinterval(interval)*interval} height={scaleinterval(interval)*(yext + 200)} viewBox={`0 0 ${interval} ${yext + 200}`}>
                             <G>
                                 <G>
                              

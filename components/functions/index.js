@@ -178,7 +178,7 @@ export function getRandomColor() {
 export function getScale(interval) {
 
     let scale = "";
-    if (interval < 30) {
+    if (interval < 60) {
         scale = "day"
     } else if (interval <= 730) {
         scale = "month"
