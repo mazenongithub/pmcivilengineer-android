@@ -40,7 +40,7 @@ class MyApp extends Component {
       render: "", profilecheck: false, message: "", profile: "", emailaddress: '', emailaddresscheck: false, client: false,
       clientid: false, activemilestoneid: false, start: '', end: '', milestone: '', activeprovider: '', role: '', firstname: '', lastname: '', phonenumber: '', profileurl: '',
       activeprojectid: false, scope: '', title: '', address: '', city: '', projectstate: '', zipcode: '', search: '', start: new Date(), completion: new Date(),
-      slides: [], activeimage: 'projectmanagement', password: '', passwordcheck: false, showpassword: false, googlepay: false, charge: '', chargeamount: '', design:'', startcalender: true,
+      slides: [], activeimage: 'projectmanagement', password: '', passwordcheck: false, showpassword: false, googlepay: false, charge: '', chargeamount: '', design: '', startcalender: true,
       completioncalender: true,
       startdateday: '',
       startdatemonth: '',
@@ -48,14 +48,14 @@ class MyApp extends Component {
       completiondateday: '',
       completiondatemonth: '',
       completiondateyear: '',
-      milestonestart:'',
-      milestonefinish:''
+      milestonestart: '',
+      milestonefinish: ''
     }
   }
 
 
   componentDidMount() {
-const milestone = new Milestone();
+    const milestone = new Milestone();
     this.props.reduxNavigation({ navigation: 'landing' })
     this.checkuserlogin()
     milestone.completiondatedefault.call(this);
@@ -71,12 +71,7 @@ const milestone = new Milestone();
     const pm = new PM();
     try {
       let response = await CheckUserLogin();
-
-      if (response.hasOwnProperty("allusers")) {
-        let companys = returnCompanyList(response.allusers);
-        this.props.reduxAllCompanys(companys)
-        this.props.reduxAllUsers(response.allusers);
-      }
+      console.log(response)
       if (response.hasOwnProperty("myuser")) {
 
         this.props.reduxUser(response.myuser);
@@ -133,17 +128,17 @@ const milestone = new Milestone();
   handleteam(projectid) {
     this.props.reduxNavigation({ navigation: 'team' })
     this.props.reduxProject({ projectid })
-    this.setState({ activeprovider:false,activeengineer:false, search:'', design:'' })
+    this.setState({ activeprovider: false, activeengineer: false, search: '', design: '' })
   }
   handlemilestones(projectid) {
     this.props.reduxNavigation({ navigation: 'milestones' })
     this.props.reduxProject({ projectid })
-    this.setState({ activemilestoneid:false, milestonefinish:''})
+    this.setState({ activemilestoneid: false, milestonefinish: '' })
   }
 
   handleproposals(projectid) {
     this.props.reduxNavigation({ navigation: 'proposals' })
-    this.props.reduxProject({ projectid }) 
+    this.props.reduxProject({ projectid })
     this.setState({ message: "" })
   }
 
@@ -312,8 +307,8 @@ const milestone = new Milestone();
         return (specification.getspecification.call(this))
       case 'costestimate':
         return (costestimate.showcostestimate.call(this))
-        case 'estimatelineitem':
-          return (lineitem.showlineitem.call(this))
+      case 'estimatelineitem':
+        return (lineitem.showlineitem.call(this))
       case 'team':
         return (team.showteam.call(this))
       case 'milestones':

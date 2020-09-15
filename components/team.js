@@ -3,9 +3,25 @@ import { Alert, Image, TextInput, View, Text, TouchableOpacity } from 'react-nat
 import { MyStylesheet } from './styles';
 import PM from './pm'
 import ProjectID from './projectid'
-import { TeamMember } from './functions'
+import { TeamMember, returnCompanyList } from './functions'
+import {LoadAllUsers} from './actions/api';
 
 class Team {
+
+    async loadallusers() {
+        try {
+            let response = await LoadAllUsers();
+            console.log(response)
+            if (response.hasOwnProperty("allusers")) {
+                let companys = returnCompanyList(response.allusers);
+                this.props.reduxAllCompanys(companys)
+                this.props.reduxAllUsers(response.allusers);
+            }
+        } catch (err) {
+            alert(err)
+        }
+
+    }
 
     confirmremoveengineer(engineer) {
         const pm = new PM();
@@ -61,7 +77,7 @@ class Team {
         const teamProfile = pm.getteamprofile.call(this);
         const removeIcon = pm.getremoveicon.call(this);
         const headerFont = pm.getHeaderFont.call(this)
-
+        
         const ProfileImage = () => {
 
             if (myuser.profileurl) {
@@ -166,6 +182,23 @@ class Team {
             })
         }
         return myproviders;
+    }
+
+    validateengineer(providerid) {
+       
+        const pm = new PM();
+        const myproject = pm.getactiveproject.call(this)
+        const myteam = pm.getengineering.call(this, myproject.projectid);
+        let validate = true;
+        if (myteam) {
+            // eslint-disable-next-line
+            myteam.map(myteam => {
+                if (myteam.providerid === providerid) {
+                    validate = false;
+                }
+            })
+        }
+        return validate;
     }
 
     validateprovider(providerid) {
@@ -520,16 +553,16 @@ class Team {
 
         const pm = new PM();
         const myuser = pm.getuser.call(this)
-        const validate = (providerid) => {
-            return true;
-        }
+        const team = new Team();
+        const validate = team.validateengineer.call(this,providerid)
+        if(validate) {
         if (myuser) {
             const activeparams = pm.getactiveparams.call(this)
             const projectid = activeparams.projectid;
             const myproject = pm.getprojectbyid.call(this, projectid);
             if (myproject) {
                 const i = pm.getprojectkeybyid.call(this, projectid);
-                if (validate(providerid)) {
+               
                     const myengineers = pm.getengineering.call(this, projectid);
                     const role = this.state.role;
                     let newteam = TeamMember(providerid, role)
@@ -543,11 +576,13 @@ class Team {
                     }
                     this.props.reduxUser(myuser);
                     this.setState({ activeengineer: myuser.providerid })
-                }
+                
 
             }
 
         }
+
+    }
     }
 
 
@@ -641,6 +676,11 @@ class Team {
         const regularFont = pm.getRegularFont.call(this);
         const projectid = new ProjectID();
         const team = new Team();
+        const allusers = pm.getallusers.call(this);
+        if(!allusers) {
+            team.loadallusers.call(this)
+
+        }
         return (
             <View style={[styles.generalFlex]}>
                 <View style={[styles.flex1]}>
