@@ -171,6 +171,7 @@ export function calculateyear(int, compl, start, completion) {
     return { width, xo }
 }
 
+<<<<<<< HEAD
 export function checkemptyobject(obj) {
     let empty = true;
     // eslint-disable-next-line
@@ -190,6 +191,8 @@ export function calculateFloat (day_1, day_2) {
     
   }
 
+=======
+>>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
 export function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -203,7 +206,11 @@ export function getRandomColor() {
 export function getScale(interval) {
 
     let scale = "";
+<<<<<<< HEAD
     if (interval < 120) {
+=======
+    if (interval < 60) {
+>>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
         scale = "day"
     } else if (interval <= 1200) {
         scale = "month"
@@ -853,4 +860,30 @@ export function calculatetotalhours(timeout, timein) {
     let totalhours = ((dateout.getTime() - datein.getTime()) / (1000 * 60 * 60))
     return totalhours;
 }
+
+export function checkemptyobject(obj) {
+    let empty = true;
+    // eslint-disable-next-line
+    for(let x in obj) {
+      empty = false;
+      
+    }
+    
+   return empty; 
+  }
+
+export function getDateTime (datestr)  {
+    let offset = getOffsetDate(datestr)
+    let datein = new Date(`${datestr.replace(/-/g, '/')} 00:00:00${offset}`)
+    return datein.getTime();
+  }
+
+
+export function calculateFloat (day_1, day_2) {
+    const date_1 =new Date(`${day_1.replace(/-/g, '/')} 00:00:00${getOffsetDate(day_1)}`)
+    const date_2 =new Date(`${day_2.replace(/-/g, '/')} 00:00:00${getOffsetDate(day_2)}`)
+    const time = date_2.getTime() - date_1.getTime();
+    return Math.round(time/(1000*60*60*24))
+    
+  }
 

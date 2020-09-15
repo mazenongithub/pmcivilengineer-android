@@ -45,6 +45,14 @@ class Team {
         )
     }
 
+    makeengineeractive(engineerid) {
+        if (this.state.activeengineer === engineerid) {
+            this.setState({ activeengineer: false })
+        } else {
+            this.setState({ activeengineer: engineerid })
+        }
+    }
+
     showengineer(myuser) {
         const team = new Team();
         const styles = MyStylesheet();
@@ -58,16 +66,21 @@ class Team {
 
             if (myuser.profileurl) {
 
-                return (<TouchableOpacity onPress={() => { this.setState({ activeengineer: myuser.providerid }) }}>
+                return (
                     <Image source={{ uri: `${myuser.profileurl}` }}
                         resizeMethod='scale'
                         style={[teamProfile, styles.showBorder]}
                     />
-                </TouchableOpacity>)
+                )
             } else {
-                return (<TouchableOpacity onPress={() => { this.setState({ activeengineer: myuser.providerid }) }}>
 
-                </TouchableOpacity>)
+                return (
+                    <Image source={require(`./png/2x/defaultphoto.png`)}
+                        style={[teamProfile, styles.showBorder]}
+                        resizeMethod='scale'
+                    />
+                )
+
             }
         }
         const Role = () => {
@@ -75,7 +88,7 @@ class Team {
                 return (<View style={{ ...styles.generalContainer }}>
                     <View style={{ ...styles.alignCenter }}>
                         <Text style={{ ...styles.generalFont, ...regularFont }}
-                            onPress={() => { this.setState({ activeengineer: providerid }) }}
+                            onPress={() => { team.makeengineeractive.call(this, myuser.providerid) }}
                         >{myuser.firstname} {myuser.lastname}'s Role on the Project</Text>
                     </View>
                     <View style={{ ...styles.generalFont, ...regularFont, ...styles.alignCenter }}>
@@ -87,11 +100,19 @@ class Team {
             }
         }
 
-        return (<View style={{ ...styles.generalContainer, ...styles.generalFont, ...regularFont, ...styles.showBorder }} key={`design${myuser.providerid}`}>
+        const activebackground = () => {
+            if (this.state.activeengineer === myuser.providerid) {
+                return (styles.activebackground)
+            } else {
+                return;
+            }
+        }
+
+        return (<View style={{ ...styles.generalContainer, ...styles.generalFont, ...regularFont, ...styles.bottomMargin15 }} key={`design${myuser.providerid}`}>
             <View style={[styles.generalFlex]}>
-                <View style={[styles.flex3]}>
+                <View style={[styles.flex3,activebackground()]}>
                     <Text style={[headerFont, styles.alignCenter]}
-                        onPress={() => { this.setState({ activeengineer: myuser.providerid }) }}>/{myuser.profile}</Text>
+                        onPress={() => { team.makeengineeractive.call(this, myuser.providerid) }}>/{myuser.profile}</Text>
                 </View>
                 <View style={[styles.flex1, styles.flexRow, styles.alignContentRight]}>
                     <TouchableOpacity onPress={() => { team.removeengineer.call(this, myuser) }}>
@@ -106,15 +127,19 @@ class Team {
 
             <View style={{ ...styles.generalContainer, ...styles.alignContentCenter }}>
                 <View style={{ ...styles.showBorder, ...teamProfile, ...styles.marginAuto }}>
-                    {ProfileImage()}
+                    <TouchableOpacity onPress={() => { team.makeengineeractive.call(this, myuser.providerid) }}>
+                        {ProfileImage()}
+                    </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ ...styles.generalContainer, ...styles.alignCenter }}>
-                <Text style={{ ...styles.generalFont, ...regularFont, ...styles.alignCenter }} onPress={() => { this.setState({ activeengineer: myuser.providerid }) }}>{myuser.firstname} {myuser.lastname} {team.location.call(this, myuser)}</Text>
-            </View>
-
+          
 
             {Role()}
+
+            <View style={{ ...styles.generalContainer, ...styles.alignCenter, ...activebackground() }}>
+                <Text style={{ ...styles.generalFont, ...regularFont, ...styles.alignCenter }} onPress={() => { team.makeengineeractive.call(this, myuser.providerid) }}>{myuser.firstname} {myuser.lastname} {team.location.call(this, myuser)}</Text>
+            </View>
+
 
 
         </View>)
@@ -227,7 +252,7 @@ class Team {
 
 
         return (
-            <View style={[styles.generalFlex, styles.bottomMargin10]} key={myuser.providerid}>
+            <View style={[styles.generalFlex, styles.bottomMargin10]} key={`search${myuser.providerid}`}>
                 <View style={[styles.flex1]}>
 
                     <View style={[styles.generalFlex]}>
@@ -316,16 +341,16 @@ class Team {
         const pm = new PM();
         const params = pm.getactiveparams.call(this);
         const myuser = pm.getuser.call(this)
-        if(myuser) {
-        const i = pm.getprojectkeybyid.call(this,params.projectid)
-        const j = pm.getteamkeybyid.call(this,myprovider.providerid)
-       
-                myuser.projects.myproject[i].projectteam.myteam.splice(j, 1);
-                this.props.reduxUser(myuser)
-                this.setState({ activeprovider: false, message:'' })
-    
+        if (myuser) {
+            const i = pm.getprojectkeybyid.call(this, params.projectid)
+            const j = pm.getteamkeybyid.call(this, myprovider.providerid)
+
+            myuser.projects.myproject[i].projectteam.myteam.splice(j, 1);
+            this.props.reduxUser(myuser)
+            this.setState({ activeprovider: false, message: '' })
+
         }
-    
+
     }
     removeprovider(myuser) {
         const team = new Team();
@@ -334,7 +359,7 @@ class Team {
             `Are you sure you want to remove ${myuser.profile}?`,
             [
                 { text: 'Cancel', onPress: () => console.log('Cancel Remove team '), style: 'cancel' },
-                { text: 'OK', onPress: () => { team.confirmremoveteam.call(this,myuser) } },
+                { text: 'OK', onPress: () => { team.confirmremoveteam.call(this, myuser) } },
             ],
             { cancelable: false }
         )
@@ -347,31 +372,39 @@ class Team {
         const removeIconSize = pm.getremoveicon.call(this)
         const searchPhoto = pm.getsearchphotolarge.call(this)
         const headerFont = pm.getHeaderFont.call(this)
+        const teamProfile = pm.getteamprofile.call(this)
         const team = new Team();
         const activebackground = () => {
-            if(this.state.activeprovider === myuser.providerid) {
-                return(styles.activebackground)
+            if (this.state.activeprovider === myuser.providerid) {
+                return (styles.activebackground)
             } else {
                 return;
             }
         }
         const SearchPhoto = () => {
             if (myuser.profileurl) {
-                return (<TouchableOpacity onPress={()=>{team.makeprovideractive.call(this,myuser.providerid)}}>
+                return (<TouchableOpacity onPress={() => { team.makeprovideractive.call(this, myuser.providerid) }}>
                     <Image source={{ uri: `${myuser.profileurl}` }}
                         resizeMethod='scale'
                         style={[searchPhoto, styles.showBorder]}
                     />
                 </TouchableOpacity>)
             } else {
-                return;
+                return (
+                    <TouchableOpacity onPress={() => { team.makeprovideractive.call(this, myuser.providerid) }}>
+                    <Image source={require(`./png/2x/defaultphoto.png`)}
+                        style={[teamProfile, styles.showBorder]}
+                        resizeMethod='scale'
+                    />
+                    </TouchableOpacity>
+                );
             }
         }
         const Role = () => {
             if (this.state.activeprovider === myuser.providerid) {
                 return (<View style={[styles.generalFlex]}>
                     <View style={[styles.flex1]}>
-                        <Text style={[regularFont]}>{myuser.firstname} {myuser.lastname}'s Role on the Project </Text>
+                        <Text style={[regularFont]} onPress={() => { team.makeprovideractive.call(this, myuser.providerid) }}>{myuser.firstname} {myuser.lastname}'s Role on the Project </Text>
                         <TextInput style={[regularFont, styles.defaultInput]}
                             value={team.getrole.call(this)}
                             onChangeText={text => { team.handlerole.call(this, text) }}
@@ -381,16 +414,16 @@ class Team {
             }
         }
         return (
-            <View style={[styles.generalFlex]} key={`team-${myuser.providerid}`}>
+            <View style={[styles.generalFlex, styles.bottomMargin15]} key={`team-${myuser.providerid}`}>
                 <View style={[styles.flex1]}>
 
 
                     <View style={[styles.generalFlex]}>
-                    <View style={[styles.flex3]}>
-                        <Text style={[headerFont, styles.alignCenter]}>/{myuser.profile}</Text>
-                    </View>
+                        <View style={[styles.flex3,activebackground()]}>
+                            <Text style={[headerFont, styles.alignCenter]} onPress={() => { team.makeprovideractive.call(this, myuser.providerid) }}>/{myuser.profile}</Text>
+                        </View>
                         <View style={[styles.flex1, styles.flexRow, styles.alignContentRight]}>
-                            <TouchableOpacity onPress={()=>{team.removeprovider.call(this,myuser)}}>
+                            <TouchableOpacity onPress={() => { team.removeprovider.call(this, myuser) }}>
                                 <Image source={require('./png/removeIcon.png')}
                                     style={removeIconSize}
                                     resizeMethod='scale'
@@ -399,10 +432,7 @@ class Team {
 
                         </View>
                     </View>
-                    <Text style={[regularFont, styles.alignCenter, activebackground()]} onPress={() => { team.makeprovideractive.call(this, myuser.providerid) }} key={`team-${myuser.providerid}`}>
-                        {myuser.firstname} {myuser.lastname} {team.location.call(this, myuser)}
-                    </Text>
-
+                    
                     <View style={[styles.generalFlex]}>
                         <View style={[styles.flex1, styles.alignContentCenter]}>
                             {SearchPhoto()}
@@ -410,6 +440,11 @@ class Team {
                     </View>
 
                     {Role()}
+
+                    <Text style={[regularFont, styles.alignCenter, activebackground()]} onPress={() => { team.makeprovideractive.call(this, myuser.providerid) }} key={`team-${myuser.providerid}`}>
+                        {myuser.firstname} {myuser.lastname} {team.location.call(this, myuser)}
+                    </Text>
+
 
                 </View>
             </View>
@@ -571,7 +606,7 @@ class Team {
 
     }
 
-    
+
     showdesignresults() {
         const pm = new PM();
         const team = new Team();
@@ -598,82 +633,83 @@ class Team {
     }
 
 
-showteam() {
-    const pm = new PM();
-    const myproject = pm.getactiveproject.call(this)
-    const styles = MyStylesheet();
-    const headerFont = pm.getHeaderFont.call(this);
-    const regularFont = pm.getRegularFont.call(this);
-    const projectid = new ProjectID();
-    const team = new Team();
-    return (
-        <View style={[styles.generalFlex]}>
-            <View style={[styles.flex1]}>
+    showteam() {
+        const pm = new PM();
+        const myproject = pm.getactiveproject.call(this)
+        const styles = MyStylesheet();
+        const headerFont = pm.getHeaderFont.call(this);
+        const regularFont = pm.getRegularFont.call(this);
+        const projectid = new ProjectID();
+        const team = new Team();
+        return (
+            <View style={[styles.generalFlex]}>
+                <View style={[styles.flex1]}>
 
-                <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                    <View style={[styles.flex1]}>
-                        <Text style={[styles.boldFont, styles.alignCenter, headerFont]}>/project/{myproject.title}/team</Text>
+                    <View style={[styles.generalFlex, styles.bottomMargin10]}>
+                        <View style={[styles.flex1]}>
+                            <Text style={[styles.boldFont, styles.alignCenter, headerFont]}>/{myproject.title}</Text>
+                            <Text style={[styles.boldFont, styles.alignCenter, headerFont]}>/team</Text>
+                        </View>
                     </View>
-                </View>
 
-                <View style={{ ...styles.generalFlex, ...styles.bottomMargin10 }}>
-                            <View style={{ ...styles.flex1 }}>
-                                <Text style={{ ...headerFont, ...styles.generalFont }}>Construction Team</Text>
-                            </View>
+                    <View style={{ ...styles.generalFlex, ...styles.bottomMargin10 }}>
+                        <View style={{ ...styles.flex1 }}>
+                            <Text style={{ ...headerFont, ...styles.generalFont }}>Construction Team</Text>
                         </View>
-
-                        <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                            <View style={[styles.flex1]}>
-                                <Text style={[regularFont]}>Construction Search </Text>
-                                <TextInput style={[styles.defaultInput, regularFont]}
-                                    value={this.state.search}
-                                    onChangeText={text => { this.setState({ search: text }) }}
-                                />
-                            </View>
-                        </View>
-
-                {team.showsearchresults.call(this)}
-
-                <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                    <View style={[styles.flex1]}>
-                        <Text style={[headerFont]}>Project Team - Touch Icon to Define their Role</Text>
                     </View>
-                </View>
 
-                {team.showteamids.call(this)}
-
-                <View style={{ ...styles.generalFlex, ...styles.bottomMargin10 }}>
-                            <View style={{ ...styles.flex1 }}>
-                                <Text style={{ ...headerFont, ...styles.generalFont }}>Design Team</Text>
-                            </View>
+                    <View style={[styles.generalFlex, styles.bottomMargin10]}>
+                        <View style={[styles.flex1]}>
+                            <Text style={[regularFont]}>Construction Search </Text>
+                            <TextInput style={[styles.defaultInput, regularFont]}
+                                value={this.state.search}
+                                onChangeText={text => { this.setState({ search: text }) }}
+                            />
                         </View>
-
-                        <View style={{ ...styles.generalFlex, ...styles.bottomMargin10 }}>
-                            <View style={{ ...styles.flex1, ...regularFont, ...styles.generalFont }}>
-                                <Text style={{ ...styles.flex1, ...regularFont, ...styles.generalFont }}>Design Search </Text>
-                                <TextInput
-                                    value={this.state.design}
-                                    onChangeText={text => { this.setState({ design: text }) }}
-                                    style={{ ...styles.generalFont, ...regularFont, ...styles.defaultInput }} />
-                            </View>
-                        </View>
-
-                        {team.showdesignresults.call(this)}
-
-                        {team.showdesignteamids.call(this)}
-
-
-                        <View style={[styles.generalFlex]}>
-                    <View style={[styles.flex1, styles.bottomMargin30]}>
-                        {pm.showsaveproject.call(this)}
                     </View>
+
+                    {team.showsearchresults.call(this)}
+
+                    <View style={[styles.generalFlex, styles.bottomMargin10]}>
+                        <View style={[styles.flex1]}>
+                            <Text style={[headerFont]}>Project Team - Touch Icon to Define their Role</Text>
+                        </View>
+                    </View>
+
+                    {team.showteamids.call(this)}
+
+                    <View style={{ ...styles.generalFlex, ...styles.bottomMargin10 }}>
+                        <View style={{ ...styles.flex1 }}>
+                            <Text style={{ ...headerFont, ...styles.generalFont }}>Design Team</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ ...styles.generalFlex, ...styles.bottomMargin10 }}>
+                        <View style={{ ...styles.flex1, ...regularFont, ...styles.generalFont }}>
+                            <Text style={{ ...styles.flex1, ...regularFont, ...styles.generalFont }}>Design Search </Text>
+                            <TextInput
+                                value={this.state.design}
+                                onChangeText={text => { this.setState({ design: text }) }}
+                                style={{ ...styles.generalFont, ...regularFont, ...styles.defaultInput }} />
+                        </View>
+                    </View>
+
+                    {team.showdesignresults.call(this)}
+
+                    {team.showdesignteamids.call(this)}
+
+
+                    <View style={[styles.generalFlex]}>
+                        <View style={[styles.flex1, styles.bottomMargin30]}>
+                            {pm.showsaveproject.call(this)}
+                        </View>
+                    </View>
+
+                    {projectid.showprojectid.call(this, myproject)}
+
                 </View>
-
-                {projectid.showprojectid.call(this, myproject)}
-
             </View>
-        </View>
-    )
-}
+        )
+    }
 }
 export default Team;
