@@ -267,21 +267,30 @@ class Team {
         const pm = new PM();
         const styles = MyStylesheet();
         const regularFont = pm.getRegularFont.call(this)
-        const searchPhoto = pm.getsearchphoto.call(this)
+        const searchPhoto= pm.getsearchphoto.call(this)
         const team = new Team();
-        const SearchPhoto = () => {
+        const searchprofilephoto = (myuser) => {
             if (myuser.profileurl) {
-                return (<TouchableOpacity onPress={() => { team.addteam.call(this, myuser.providerid) }}>
-                    <Image source={{ uri: `${myuser.profileurl}` }}
-                        resizeMethod='scale'
-                        style={[searchPhoto, styles.showBorder]}
-                    />
-                </TouchableOpacity>)
+                return (<Image source={{ uri: `${myuser.profileurl}` }}
+                    resizeMethod='scale'
+                    style={[searchPhoto, styles.showBorder]}
+                />)
             } else {
-                return;
+                return (<Image
+                    source={require(`./png/2x/defaultphoto.png`)}
+                    resizeMethod='scale'
+                    style={[searchPhoto, styles.showBorder]}
+                />)
             }
         }
-
+        const SearchPhoto = (myuser) => {
+            return (
+                <View style={{ ...styles.generalContainer, ...styles.searchphoto, ...styles.alignContentCenter }}>
+                    <TouchableOpacity onPress={() => team.addDesignTeam.call(this, myuser.providerid)}>
+                        {searchprofilephoto(myuser)}
+                    </TouchableOpacity>
+                </View>)
+        }
 
 
         return (
@@ -290,7 +299,7 @@ class Team {
 
                     <View style={[styles.generalFlex]}>
                         <View style={[styles.flex1]}>
-                            {SearchPhoto()}
+                            {SearchPhoto(myuser)}
                         </View>
                     </View>
 
@@ -593,22 +602,30 @@ class Team {
         const team = new Team();
         const searchphoto = pm.getsearchphoto.call(this)
 
-        const SearchPhoto = () => {
-            if (myuser.profileurl) {
+        const icon = (myuser) => {
+            if(myuser.profileurl) {
+                return(<Image source={{ uri: `${myuser.profileurl}` }}
+                resizeMethod='scale'
+                style={[searchphoto, styles.showBorder]}
+            />)
+            } else {
+             return(<Image
+                    source={require(`./png/2x/defaultphoto.png`)}
+                    resizeMethod='scale'
+                    style={[searchphoto, styles.showBorder]}
+                />)
+            }
+        }
+
+        const SearchPhoto = (myuser) => {
+    
                 return (
-                    <View style={{ ...styles.generalContainer, ...styles.searchphoto, ...styles.showBorder, ...styles.alignContentCenter }}>
-
-
+                    <View style={{ ...styles.generalContainer, ...searchphoto,  ...styles.alignContentCenter }}>
                         <TouchableOpacity onPress={() => team.addDesignTeam.call(this, myuser.providerid)}>
-                            <Image source={{ uri: `${myuser.profileurl}` }}
-                                resizeMethod='scale'
-                                style={[searchphoto, styles.showBorder]}
-                            />
+                            {icon(myuser)}
                         </TouchableOpacity>
                     </View>)
-            } else {
-                return;
-            }
+           
         }
 
         const location = () => {
@@ -631,7 +648,7 @@ class Team {
         return (
             <View style={{ ...styles.generalFlex, ...styles.bottomMargin15 }} onPress={() => team.addDesignTeam.call(this, myuser.providerid)} key={`design${myuser.providerid}`}>
                 <View style={{ ...styles.flex1 }}>
-                    {SearchPhoto()}
+                    {SearchPhoto(myuser)}
                 </View>
                 <View style={{ ...styles.flex3 }}>
                     <Text style={{ ...styles.generalFont, ...regularFont }} onPress={() => team.addDesignTeam.call(this, myuser.providerid)}> {myuser.firstname} {myuser.lastname}{location()}</Text>

@@ -256,6 +256,20 @@ bidprice(csiid) {
 
     }
 
+    getbidprice(csiid) {
+        const viewproposal = new ViewProposal()
+        let directcost = Number(viewproposal.getdirectcost.call(this, csiid));
+        let profit = Number(viewproposal.getprofit.call(this, csiid));
+        
+        if (!profit) {
+            profit = 1
+        } else {
+            profit = 1 + (profit / 100)
+        }
+        let bidprice = (directcost * profit) 
+        return bidprice;
+    }
+
     getunitprice(csiid) {
         const viewproposal = new ViewProposal();
         let quantity = Number(viewproposal.getquantity.call(this, csiid));
@@ -411,16 +425,13 @@ bidprice(csiid) {
 
                         <View style={[styles.generalFlex, styles.bottomMargin10]}>
                             <View style={[styles.flex1]}>
-                                <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{myproject.title}/proposal/{proposalid}</Text>
+                                <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{myproject.title}</Text>
+                                <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/proposal/{proposalid}</Text>
                             </View>
                         </View>
                         {viewproposal.showbidtable.call(this)}
 
-                        <View style={[styles.generalFlex, styles.bottomMargin30]}>
-                        <View style={[styles.flex1]}>
-                            <Text style={[regularFont, styles.alignCenter]}>*includes primary overhead Stripe 2.9%; secondary overhead CivilEngineer.io 3%</Text>
-                        </View>
-                    </View>
+                  
 
                         <View style={[styles.generalFlex, styles.bottomMargin10]}>
                             <View style={[styles.flex1, styles.alignContentCenter]}>

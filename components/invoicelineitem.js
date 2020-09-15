@@ -246,7 +246,8 @@ class InvoiceLineItem {
 
                     <View style={[styles.generalFlex, styles.bottomMargin10]}>
                         <View style={[styles.flex1]}>
-                            <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{myproject.title}/invoice/{invoiceid}/csi/{csi.csi}-{csi.title}</Text>
+                            <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{myproject.title}/invoice</Text>
+                            <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{invoiceid}/csi/{csi.csi}-{csi.title}</Text>
                         </View>
                     </View>
 
