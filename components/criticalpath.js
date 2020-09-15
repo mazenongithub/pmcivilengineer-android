@@ -1,11 +1,7 @@
 import React from 'react'
 import { MyStylesheet } from './styles';
 import PM from './pm'
-<<<<<<< HEAD
 import {  getDateInterval, trailingZeros, getOffsetDate, monthString, increaseCalendarDayOneMonth, calculatemonth, milestoneformatdatestring, getScale, calculateyear, increasedatebyoneday, calculateday,getRandomColor} from './functions'
-=======
-import {  getDateInterval, trailingZeros, getOffsetDate, monthString, increaseCalendarDayOneMonth, calculatemonth, milestoneformatdatestring, getScale, calculateyear, increasedatebyoneday, calculateday, getRandomColor } from './functions'
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
 import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import Svg, {
     Rect,
@@ -354,29 +350,15 @@ class CriticalPath {
                 const float = pm.getfloatbymilestoneid.call(this,this.state.activemilestoneid) 
                 const milestone = pm.getmilestonebyid.call(this, this.state.activemilestoneid);
                 const projectfloat = pm.calcTotalProjectFloat.call(this,this.state.activemilestoneid)
-<<<<<<< HEAD
 
                 return (
                     <View style={{ ...styles.generalFlex, ...styles.bottomMargin15 }}>
                         <Text style={{ ...styles.generalFont, ...regularFont }}>Active Milestone Is: {milestone.milestone} Float is {float} days Project Float is {projectfloat} days</Text>
-=======
-                const lag = pm.getlagbymilestoneid.call(this,this.state.activemilestoneid)
-                return (
-                    <View style={{ ...styles.generalFlex, ...styles.bottomMargin15 }}>
-                        <Text style={{ ...styles.generalFont, ...regularFont }}>Active Milestone Is: {milestone.milestone} Float is {float} days Project Float is {projectfloat} days Lag is {lag} days</Text>
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
                     </View>
                 )
             }
         }
 
-        const auditmessage = (message) => {
-            if(message) {
-                return(<View style={{...styles.generalFont, ...styles.redFont,...styles.bottomMargin15}}><Text style={{...regularFont,...styles.redFont}}>{message}</Text></View>)
-            }
-
-
-        }
 
 
 
@@ -474,10 +456,6 @@ class CriticalPath {
             if (this.state.activemilestoneid) {
                 return (
                     <View style={{ ...styles.generalFlex, ...styles.bottomMargin15 }}>
-<<<<<<< HEAD
-=======
-
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
                         <View style={{ ...styles.flex1 }}>
                             <Text style={{ ...styles.generalFont, ...regularFont }}>Can't Start until which milestones finish? </Text>
 
@@ -493,7 +471,6 @@ class CriticalPath {
             }
         }
 
-<<<<<<< HEAD
         const auditmessage = (message) => {
             if(message) {
                 return(<View style={{...styles.generalFont, ...styles.redFont,...styles.bottomMargin15}}><Text style={{...regularFont,...styles.redFont}}>{message}</Text></View>)
@@ -502,60 +479,24 @@ class CriticalPath {
 
         }
 
-        let auditmilestones = "";
-        auditmilestones += pm.auditmilestones.call(this,milestones)
-
-=======
-    
-
-        const scaleinterval = (interval) => {
-            interval = interval / 200;
-            let scale = 1;
-            if(interval > 20) {
-                scale = 0.5
-            }
-
-            if(interval > 40) {
-                scale = 0.25
-            }
-
-            if(interval > 60) {
-                scale = 0.125
-            }
-            
-            
-            return scale;
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
-
-
-        }
+ 
+        
         return (
 
             <View style={{ ...styles.generalFlex }}>
                 <View style={{ ...styles.flex1 }}>
-<<<<<<< HEAD
 
                 {auditmessage(auditmilestones)}
 
-=======
-                {auditmessage(auditmilestones)}
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
                     {activemilestone()}
 
                     {pathmenu()}
 
                     <ScrollView horizontal={true}>
-<<<<<<< HEAD
                         <Svg width={0.5*interval} height={0.5*(yext + 200)} viewBox={`0 0 ${interval} ${yext + 200}`}>
                             <G>
                                 <G>
                             
-=======
-                        <Svg width={scaleinterval(interval)*interval} height={scaleinterval(interval)*(yext + 200)} viewBox={`0 0 ${interval} ${yext + 200}`}>
-                            <G>
-                                <G>
-                             
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
                                     {showlabels()}
                                     <Polyline strokeWidth="1" stroke="rgb(0,0,0)" points={`2.5 0.38 2.5 ${yext} ${interval} ${yext}`} />
                                     {criticalpath.showmilestones.call(this)}

@@ -191,8 +191,7 @@ export function calculateFloat (day_1, day_2) {
     
   }
 
-=======
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
+
 export function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';

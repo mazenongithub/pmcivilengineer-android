@@ -1,18 +1,13 @@
 import React from 'react';
 import { Dimensions, View, TouchableOpacity, Image, Text } from 'react-native';
 import { MyStylesheet } from './styles';
-<<<<<<< HEAD
 import { inputUTCStringForLaborID, returnCompanyList, sorttimes, sortpart, getDateInterval, getScale, calculatemonth, calculateday, calculateyear, getDateTime, calculateFloat, checkemptyobject } from './functions'
-=======
-import { inputUTCStringForLaborID, returnCompanyList, sorttimes, sortpart, getDateInterval, getScale, calculatemonth, calculateday, calculateyear, calculateFloat, getDateTime,checkemptyobject} from './functions'
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
 import { SaveAllProfile, AppleLogin, CheckUserNode, LoadCSIs } from './actions/api'
 import * as GoogleSignIn from 'expo-google-sign-in';
 import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
 
 class PM {
 
-<<<<<<< HEAD
     checkemptypathsbymilestoneid(milestoneid) {
         const pm = new PM();
         const paths = pm.getpaths.call(this)
@@ -24,83 +19,6 @@ class PM {
         return empty; 
         }
 
-=======
-    
-
-    getlagbymilestoneid(milestoneid) {
-        const pm = new PM();
-        const milestones = pm.getmilestones.call(this);
-        let lag = 0;
-
-        const checklag = (startdate, enddate, i, lag) => {
-            let replacelag = false;
-
-
-            const check = Math.round((startdate-enddate)*(1/(1000*60*60*24)))
-            
-            
-            if(i===0 && check>0) {
-                replacelag = true;
-            } else if(check < lag) {
-                replacelag = true;
-            }
-
-        
-
-            return replacelag;
-        }
-        
-        if(milestones) {
-            const mymilestone = pm.getmilestonebyid.call(this,milestoneid);
-            if(mymilestone) {
-
-            const startdate = getDateTime(mymilestone.start);
-
-            if(mymilestone.hasOwnProperty("predessors")) {
-                // eslint-disable-next-line
-                mymilestone.predessors.map((predessor,i)=> {
-
-                    const enddate = getDateTime(pm.getmilestonebyid.call(this,predessor.predessor).completion)
-                 
-                    if(startdate >= enddate && checklag(startdate,enddate,i,lag)) {
-                        lag = Math.round((startdate-enddate)*(1/(1000*60*60*24)))
-                    }
-
-                })
-            }
-
-            }
-        }
-        return lag;
-    }
-
-
-    getfloatbymilestoneid(milestoneid) {
-        const pm = new PM();
-        const paths = pm.getpaths.call(this)
-        let float = 0;
-        let i = 0;
-        if(paths) {
-        for (let mypath in paths[milestoneid]['paths']) {
-
-            let floatcheck = paths[milestoneid]['paths'][mypath]['float']
-
-            if (floatcheck < float || i === 0) {
-                float = floatcheck
-
-            }
-
-            i += 1;
-        }
-
-    }
-    
-        return float;
-
-    }
-
-
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
      
 
     getchargesbyprojectid(projectid) {
