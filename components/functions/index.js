@@ -371,6 +371,18 @@ return(reg_ex.test(mon))
 }
 
 
+export function isNumeric(val) {
+
+    if (val) {
+        return (!isNaN(val))
+    } else {
+        return (true);
+    }
+
+
+}
+
+
 export function getFirstIsOnDate(datein) {
 
     let monthdisplay = datein.getMonth() + 1;

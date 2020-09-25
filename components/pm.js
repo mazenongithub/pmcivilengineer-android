@@ -8,6 +8,53 @@ import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
 
 class PM {
 
+    getbidkeybyid(projectid,csiid) {
+        const pm = new PM();
+        let key = false;
+        const bid = pm.getprojectbid.call(this,projectid)
+        if (bid) {
+            // eslint-disable-next-line
+            bid.map((item, i) => {
+                if (item.csiid === csiid) {
+                    key = i;
+                }
+            })
+        }
+
+        return key;
+    }
+
+    getbidbyid(projectid,csiid) {
+        const pm = new PM();
+        let myitem = false;
+        const bid = pm.getprojectbid.call(this, projectid)
+        if (bid) {
+            // eslint-disable-next-line
+            bid.map(item => {
+                if (item.csiid === csiid) {
+                    myitem = item;
+                }
+            })
+        }
+
+        return myitem;
+    }
+
+
+    getprojectbid(projectid) {
+        const pm = new PM();
+        let bid = false;
+        const project = pm.getprojectbyid.call(this,projectid)
+        if (project) {
+            if (project.hasOwnProperty("bid")) {
+                bid = project.bid;
+            }
+
+        }
+        return bid;
+    }
+
+
     checkemptypathsbymilestoneid(milestoneid) {
         const pm = new PM();
         const paths = pm.getpaths.call(this)
@@ -206,6 +253,23 @@ class PM {
         }
 
     }
+
+    getbidschedulekeybyid(projectid,csiid) {
+        const pm = new PM();
+        let key = false;
+        const bidschedule = pm.getbidschedule.call(this,projectid)
+        if (bidschedule) {
+            // eslint-disable-next-line
+            bidschedule.map((item, i) => {
+                if (item.csiid === csiid) {
+                    key = i;
+                }
+            })
+        }
+
+        return key;
+    }
+
     getPlusIcon() {
         return ({ width: 27, height: 27 })
     }
@@ -1703,6 +1767,38 @@ getengineering(projectid) {
             invoices = myproject.invoices.myinvoice;
         }
         return invoices;
+    }
+
+    
+    getbidschedule(projectid) {
+        const pm = new PM();
+        let bidschedule = false;
+        const project = pm.getprojectbyid.call(this,projectid)
+        if (project) {
+            if (project.hasOwnProperty("bidschedule")) {
+                bidschedule = project.bidschedule;
+            }
+
+        }
+
+        return bidschedule;
+    }
+
+
+    getbidschedulebyid(projectid,csiid) {
+        const pm = new PM();
+        let myitem = false;
+        const bidschedule = pm.getbidschedule.call(this,projectid)
+        if (bidschedule) {
+            // eslint-disable-next-line
+            bidschedule.map(item => {
+                if (item.csiid === csiid) {
+                    myitem = item;
+                }
+            })
+        }
+
+        return myitem;
     }
     getchargesbyinvoiceid(invoiceid) {
         const pm = new PM()

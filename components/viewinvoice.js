@@ -1008,9 +1008,7 @@ class ViewInvoice {
                             </View>
                         </View>
                         {viewinvoice.showbidtable.call(this)}
-
-                     
-
+                 
                         {updated()}
 
                         {viewinvoice.showsummary.call(this)}
@@ -1018,8 +1016,6 @@ class ViewInvoice {
                         {viewinvoice.settlementSummary.call(this)}
                         {viewinvoice.balanceSummary.call(this)}
                         {settlement()}
-                     
-
                         
                     </View>
                 </View>
