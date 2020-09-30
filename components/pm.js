@@ -303,20 +303,23 @@ class PM {
         return navigation;
     }
     getRegularFont() {
-        const width = Dimensions.get('window').width;
-        if (width > 400) {
-            return ({ fontSize: 20 })
+        if (this.state.width > 1200) {
+            return ({ fontSize: 30 })
+        } else if (this.state.width > 600) {
+            return ({ fontSize: 24 })
         } else {
-            return ({ fontSize: 16 })
+            return ({ fontSize: 20 })
         }
     }
 
     getHeaderFont() {
-        const width = Dimensions.get('window').width;
-        if (width > 400) {
-            return ({ fontSize: 24 })
+        if (this.state.width > 1200) {
+            return ({ fontSize: 36 })
+
+        } else if (this.state.width > 600) {
+            return ({ fontSize: 30 })
         } else {
-            return ({ fontSize: 20 })
+            return ({ fontSize: 24 })
         }
     }
     getsaveprofileicon() {

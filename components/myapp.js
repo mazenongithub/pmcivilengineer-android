@@ -49,8 +49,22 @@ class MyApp extends Component {
       completiondatemonth: '',
       completiondateyear: '',
       milestonestart: '',
-      milestonefinish: ''
+      milestonefinish: '',
+      width:0,
+      height:0
     }
+    this.updatedimesions = this.updatedimesions.bind(this)
+   
+  }
+  
+  
+
+  
+  componentWillUnmount() {
+      Dimensions.removeEventListener('change', this.updatedimesions)
+  }
+  updatedimesions() {
+      this.setState({ width: Dimensions.get('window').width, height: Dimensions.get('window').height })
   }
 
 
@@ -60,6 +74,8 @@ class MyApp extends Component {
     this.checkuserlogin()
     milestone.completiondatedefault.call(this);
     milestone.startdatedefault.call(this)
+    Dimensions.addEventListener('change', this.updatedimesions);
+    this.setState({ width: Dimensions.get('window').width, height: Dimensions.get('window').height })
 
 
 

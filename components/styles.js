@@ -20,10 +20,12 @@ export function MyStylesheet() {
         flex4: { flex: 4 },
         flex5: { flex: 5 },
         flex6: { flex: 6 },
+
         backgroundHeader: {
             backgroundColor: '#731212',
             borderWidth: 1,
-            height: 50
+            minHeight: 60,
+            padding:5
         },
         headerText: {
             color: '#F2F2F2',

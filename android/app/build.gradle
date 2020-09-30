@@ -134,13 +134,8 @@ android {
         applicationId "io.civilengineer.pm"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-<<<<<<< HEAD
-        versionCode 25
-        versionName "1.0.25"
-=======
         versionCode 28
         versionName "1.0.28"
->>>>>>> 3205964e47d63dc94b1099534dd01b1dd544b509
     }
     splits {
         abi {
