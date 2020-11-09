@@ -312,6 +312,11 @@ class CostEstimate {
         const showprojectid = new ProjectID();
   
         const myproject = pm.getprojectbyid.call(this,projectid)
+        const csis = pm.getcsis.call(this);
+        if(!csis) {
+            pm.loadcsis.call(this)
+        }
+        
         if(myproject) {
         return (
             <View style={{ ...styles.generalFont }}>

@@ -47,13 +47,24 @@ class Specifications  {
         const headerFont = pm.getHeaderFont.call(this)
         const specifications = new Specifications();
         const activeparams = pm.getactiveparams.call(this);
+     
         const projectid = activeparams.projectid;
         const myproject = pm.getprojectbyid.call(this,projectid);
+     
+       
+        const myuser = pm.getuser.call(this)
+        const regularFont = pm.getRegularFont.call(this)
         const csis = pm.getcsis.call(this);
         if(!csis) {
             pm.loadcsis.call(this)
         }
+        if(myuser) {
+
         if(myproject) {
+
+            if(!myproject.hasOwnProperty("specifications")) {
+                pm.loadprojectspecs.call(this,myproject.projectid) 
+            }
         return (
             <View style={{ ...styles.generalFlex, ...styles.bottomMargin15 }}>
                 <View style={{ ...styles.flex1 }}>
@@ -70,7 +81,16 @@ class Specifications  {
                 </View>
             </View>)
 
+        } else {
+
+            return(<Text style={{...regularFont}}>Project Could not be found</Text>)
+
         }
+    } else {
+
+        return(<Text style={{...regularFont}}>Please Login to View Specifications</Text>)
+
+    }
     }
 
 }

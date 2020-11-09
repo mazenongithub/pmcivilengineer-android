@@ -2,11 +2,63 @@ import React from 'react';
 import { Dimensions, View, TouchableOpacity, Image, Text } from 'react-native';
 import { MyStylesheet } from './styles';
 import { inputUTCStringForLaborID, returnCompanyList, sorttimes, sortpart, getDateInterval, getScale, calculatemonth, calculateday, calculateyear, getDateTime, calculateFloat, checkemptyobject } from './functions'
-import { SaveAllProfile, AppleLogin, CheckUserNode, LoadCSIs } from './actions/api'
+import { SaveAllProfile, AppleLogin, CheckUserNode, LoadCSIs, LoadSpecifications } from './actions/api'
 import * as GoogleSignIn from 'expo-google-sign-in';
 import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
 
 class PM {
+    async loadprojectspecs(projectid) {
+        
+        const pm = new PM();
+        const myuser = pm.getuser.call(this)
+    
+     
+      
+
+        if (myuser) {
+
+            const project = pm.getprojectbyid.call(this,projectid)
+
+            if (project) {
+
+                const i = pm.getprojectkeybyid.call(this,project.projectid)
+
+                try {
+
+                    let specifications = [];
+                    let specs = await LoadSpecifications(project.projectid);
+                    console.log(specs)
+                    if(specs.hasOwnProperty("length")) {
+                        
+                        specs.map(spec => {
+                            
+                            if(spec.hasOwnProperty("specifications")) {
+                                
+                                spec.specifications.map(myspec=> {
+                                    
+                                    specifications.push(myspec)
+                                })
+                            }
+
+                        })
+
+                    }
+                    
+                    myuser.projects.myproject[i].specifications = specifications;
+                    this.props.reduxUser(myuser)
+                    this.setState({render:'render'})
+                    
+
+
+                } catch (err) {
+                    alert(err)
+                }
+
+            }
+
+        }
+
+    }
 
     getbidkeybyid(projectid,csiid) {
         const pm = new PM();

@@ -971,6 +971,11 @@ class ViewInvoice {
         const regularFont = pm.getRegularFont.call(this)
         const myinvoice = pm.getinvoicebyid.call(this, invoiceid);
         const amountowed = viewinvoice.getamountowed.call(this)
+        const csis = pm.getcsis.call(this);
+        if(!csis) {
+            pm.loadcsis.call(this)
+        }
+        
         const settlement = () => {
         
             if (amountowed) {

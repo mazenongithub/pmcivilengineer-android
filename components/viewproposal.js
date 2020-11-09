@@ -418,6 +418,10 @@ bidprice(csiid) {
         const myuser = pm.getuser.call(this);
         const headerFont = pm.getHeaderFont.call(this)
         const regularFont = pm.getRegularFont.call(this)
+        const csis = pm.getcsis.call(this);
+        if(!csis) {
+            pm.loadcsis.call(this)
+        }
         if (myuser) {
             return (
                 <View style={[styles.generalFlex]}>
