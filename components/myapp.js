@@ -51,7 +51,8 @@ class MyApp extends Component {
       milestonestart: '',
       milestonefinish: '',
       width:0,
-      height:0
+      height:0,
+      menu:'open'
     }
     this.updatedimesions = this.updatedimesions.bind(this)
    
@@ -360,7 +361,7 @@ class MyApp extends Component {
       <View style={[styles.generalFlex, styles.topMargin10, styles.leftMargin5]}>
 
         <View style={[styles.flex1]}>
-          {header.showHeader.call(this)}
+          {header.showheader.call(this)}
           <ScrollView>
             {this.mainbody()}
             <View style={{ height: Dimensions.get('window').height }}>

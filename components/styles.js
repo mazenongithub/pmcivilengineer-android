@@ -42,6 +42,9 @@ export function MyStylesheet() {
             width:115,
             height:75
         },
+        topHeader:{
+            backgroundColor: '#8C1837'
+        },
         slidecontainer:{
             height:423
         },
