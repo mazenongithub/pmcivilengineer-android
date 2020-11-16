@@ -304,9 +304,9 @@ class Charges {
     getcharges() {
         const styles = MyStylesheet();
         const pm = new PM();
-        const activeparams = pm.getactiveparams.call(this);
-        const getprojectid = activeparams.projectid;
-        const project = pm.getprojectbyid.call(this, getprojectid);
+        const menu = pm.getnavigation.call(this)
+       
+        const project = pm.getprojectbyid.call(this, menu.projectid);
         const headerFont = pm.getHeaderFont.call(this)
         const regularFont = pm.getRegularFont.call(this);
         const projectid = new ProjectID();
@@ -318,12 +318,7 @@ class Charges {
                 <View style={{ ...styles.generalFont }}>
                     <View style={{ ...styles.flex1 }}>
 
-                        <View style={{ ...styles.generalFlex }}>
-                            <View style={{ ...styles.flex1 }}>
-                                <Text style={{ ...styles.alignCenter, ...headerFont, ...styles.generalFont, ...styles.boldFont }}>/{title}</Text>
-                                <Text style={{ ...styles.alignCenter, ...headerFont, ...styles.generalFont,...styles.boldFont }}>/charges</Text>
-                            </View>
-                        </View>
+                       
 
                         <View style={{ ...styles.generalContainer, ...styles.bottomMargin15 }}>
                             <Text style={{ ...styles.generalFont, ...regularFont, ...styles.addRightMargin }}>Payment Amount</Text><TextInput

@@ -436,11 +436,10 @@ class PM {
 
     getactiveproject() {
         const pm = new PM();
-        const projectid = pm.getactiveprojectid.call(this)
+        const navigation = pm.getnavigation.call(this)
         let project = false;
-
-        if (projectid) {
-            project = pm.getprojectbyid.call(this, projectid)
+        if(navigation.hasOwnProperty("projectid")) {
+            project =pm.getprojectbyid.call(this,navigation.projectid)
         }
         return project;
     }
@@ -456,9 +455,9 @@ class PM {
 
     getactiveprojectid() {
         let projectid = "";
-        if (this.props.project) {
-            if (this.props.project.hasOwnProperty("projectid")) {
-                projectid = this.props.project.projectid;
+        if (this.props.mavigation) {
+            if (this.props.navigation.hasOwnProperty("projectid")) {
+                projectid = this.props.navigation.projectid;
             }
 
         }
@@ -700,6 +699,7 @@ class PM {
         }
 
         let message = "";
+        if(milestones) {
         // eslint-disable-next-line
         milestones.map(milestone => {
             let start = milestone.start;
@@ -721,6 +721,8 @@ class PM {
             }
 
         })
+
+    }
 
 
         return message;
@@ -1451,13 +1453,24 @@ getengineering(projectid) {
         }
         return mymilestone;
     }
+    getproject() {
+        const pm = new PM();
+        const menu = pm.getnavigation.call(this)
+        let project = false
+        if(menu.hasOwnProperty("projectid")) {
+            project = pm.getprojectbyid.call(this,menu.projectid)
+        }
+        return project;
+
+    }
 
     
     getmilestones() {
 
         const pm = new PM();
-        const projectid = pm.getactiveprojectid.call(this)
-        const myproject = pm.getprojectbyid.call(this,projectid);
+        
+        
+        const myproject = pm.getproject.call(this)
         let milestones = false;
         if (myproject) {
             if (myproject.hasOwnProperty("projectmilestones")) {

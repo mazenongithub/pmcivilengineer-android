@@ -8,7 +8,7 @@ class InvoiceLineItem {
     getlaboritems() {
         const invoicelineitem = new InvoiceLineItem();
         const pm = new PM();
-        const params = pm.getactiveparams.call(this);
+        const params = pm.getnavigation.call(this);
         const actual = pm.getAllActual.call(this)
         const csiid = params.invoice.csiid;
         const invoiceid = params.invoiceid;
@@ -52,7 +52,7 @@ class InvoiceLineItem {
     getequipmentitems() {
 
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
+        const params = pm.getnavigation.call(this)
         const actual = pm.getAllActual.call(this)
         const csiid = params.invoice.csiid;
         const invoicelineitem = new InvoiceLineItem();
@@ -93,7 +93,7 @@ class InvoiceLineItem {
 
     getmaterialitems() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
+        const params = pm.getnavigation.call(this)
         const actual = pm.getAllActual.call(this)
         const csiid = params.invoice.csiid;
         const invoicelineitem = new InvoiceLineItem();
@@ -134,7 +134,7 @@ class InvoiceLineItem {
 
     getlabor() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
+        const params = pm.getnavigation.call(this)
         const actual = pm.getAllActual.call(this)
         const csiid = params.invoice.csiid;
         
@@ -165,7 +165,7 @@ class InvoiceLineItem {
 
     getmaterial() {
         const pm = new PM();
-        const params= pm.getactiveparams.call(this)
+        const params= pm.getnavigation.call(this)
         const actual = pm.getAllActual.call(this)
         const csiid = params.invoice.csiid;
         const invoiceid = params.invoiceid
@@ -196,7 +196,7 @@ class InvoiceLineItem {
 
     getequipment() {
         const pm = new PM();
-            const params = pm.getactiveparams.call(this)
+            const params = pm.getnavigation.call(this)
             const actual = pm.getAllActual.call(this)
             const csiid = params.invoice.csiid;
             const invoiceid = params.invoiceid
@@ -227,7 +227,7 @@ class InvoiceLineItem {
     showinvoicelineitem() {
         const pm = new PM();
         const styles = MyStylesheet();
-        const params = pm.getactiveparams.call(this)
+        const params = pm.getnavigation.call(this)
         const myproject = pm.getactiveproject.call(this)
         const invoiceid = params.invoiceid;
         const csi = pm.getactualcsibyid.call(this, params.invoice.csiid)
@@ -244,12 +244,7 @@ class InvoiceLineItem {
             <View style={[styles.generalFlex]}>
                 <View style={[styles.flex1]}>
 
-                    <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                        <View style={[styles.flex1]}>
-                            <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{myproject.title}/invoice</Text>
-                            <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{invoiceid}/csi/{csi.csi}-{csi.title}</Text>
-                        </View>
-                    </View>
+                   
 
                     <View style={[styles.generalFlex, styles.bottomMargin10]}>
                         <View style={[styles.flex1, styles.showBorder]}>

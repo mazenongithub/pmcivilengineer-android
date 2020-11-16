@@ -702,12 +702,7 @@ class Team {
             <View style={[styles.generalFlex]}>
                 <View style={[styles.flex1]}>
 
-                    <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                        <View style={[styles.flex1]}>
-                            <Text style={[styles.boldFont, styles.alignCenter, headerFont]}>/{myproject.title}</Text>
-                            <Text style={[styles.boldFont, styles.alignCenter, headerFont]}>/team</Text>
-                        </View>
-                    </View>
+                   
 
                     <View style={{ ...styles.generalFlex, ...styles.bottomMargin10 }}>
                         <View style={{ ...styles.flex1 }}>

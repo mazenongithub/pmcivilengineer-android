@@ -7,8 +7,8 @@ import { CreateBidScheduleItem, DirectCostForLabor, DirectCostForMaterial, Direc
 class ViewProposal {
     getproposal() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
-        const proposalid = params.proposalid;
+        const params = pm.getnavigation.call(this)
+        const proposalid = params.proposal.proposalid;
         let myproposal = pm.getproposalbyid.call(this, proposalid)
 
         return myproposal;
@@ -43,8 +43,8 @@ class ViewProposal {
     }
     getitems() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
-        const proposalid = params.proposalid;
+        const params = pm.getnavigation.call(this)
+        const proposalid = params.proposal.proposalid;
         let payitems = pm.getAllSchedule.call(this)
         let items = [];
         const validateNewItem = (items, item) => {
@@ -108,8 +108,8 @@ class ViewProposal {
     }
     getdirectcost(csiid) {
         const pm = new PM()
-        const params = pm.getactiveparams.call(this);
-        const proposalid = params.proposalid;
+        const params = pm.getnavigation.call(this);
+        const proposalid = params.proposal.proposalid;
         const myproject = pm.getactiveproject.call(this)
         let directcost = 0;
         if (myproject) {
@@ -151,9 +151,9 @@ class ViewProposal {
     }
     proposalitemsbycsiid(csiid) {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this);
+        const params = pm.getnavigation.call(this);
         const myproject = pm.getactiveproject.call(this)
-        const proposalid = params.proposalid;
+        const proposalid = params.proposal.proposalid;
         let items = [];
         if (myproject.hasOwnProperty("schedulelabor")) {
             // eslint-disable-next-line
@@ -350,13 +350,13 @@ bidprice(csiid) {
     confirmauthorizeproposal() {
         const pm = new PM();
         const myuser = pm.getuser.call(this);
-        const params = pm.getactiveparams.call(this)
+        const params = pm.getnavigation.call(this)
         if (myuser) {
             let approved = UTCTimefromCurrentDate();
             const myproject = pm.getactiveproject.call(this);
             if (myproject) {
                 const i = pm.getprojectkeybyid.call(this,params.projectid);
-                const j = pm.getproposalkeybyid.call(this, params.proposalid);
+                const j = pm.getproposalkeybyid.call(this, params.proposal.proposalid);
                 myuser.projects.myproject[i].proposals.myproposal[j].approved = approved;
                 this.props.reduxUser(myuser)
                 pm.saveallprofile.call(this)
@@ -367,11 +367,11 @@ bidprice(csiid) {
     }
     authorizeproposal() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this);
+        const params = pm.getnavigation.call(this);
         const viewproposal = new ViewProposal();
         Alert.alert(
             'Authorize Proposal',
-            `Are you sure you want to authorize Proposal ID ${params.proposalid}?`,
+            `Are you sure you want to authorize Proposal ID ${params.proposal.proposalid}?`,
             [
                 { text: 'Cancel', onPress: () => console.log('Cancel Authorized Proposal '), style: 'cancel' },
                 { text: 'OK', onPress: () => { viewproposal.confirmauthorizeproposal.call(this) } },
@@ -382,8 +382,8 @@ bidprice(csiid) {
 
     getupdated() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
-        const proposal = pm.getproposalbyid.call(this, params.proposalid)
+        const params = pm.getnavigation.call(this)
+        const proposal = pm.getproposalbyid.call(this, params.proposal.proposalid)
         let updated = "";
         if (proposal) {
             if (proposal.updated) {
@@ -395,8 +395,8 @@ bidprice(csiid) {
 
     getapproved() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
-        const proposal = pm.getproposalbyid.call(this, params.proposalid)
+        const params = pm.getnavigation.call(this)
+        const proposal = pm.getproposalbyid.call(this, params.proposal.proposalid)
         let approved = "";
         if (proposal) {
 
@@ -410,9 +410,9 @@ bidprice(csiid) {
     }
     showproposal() {
         const pm = new PM();
-        const params = pm.getactiveparams.call(this)
+        const params = pm.getnavigation.call(this)
         const myproject = pm.getactiveproject.call(this)
-        const proposalid = params.proposalid;
+        const proposalid = params.proposal.proposalid;
         const styles = MyStylesheet();
         const viewproposal = new ViewProposal();
         const myuser = pm.getuser.call(this);
@@ -427,12 +427,7 @@ bidprice(csiid) {
                 <View style={[styles.generalFlex]}>
                     <View style={[styles.flex1]}>
 
-                        <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                            <View style={[styles.flex1]}>
-                                <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{myproject.title}</Text>
-                                <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/proposal/{proposalid}</Text>
-                            </View>
-                        </View>
+                    
                         {viewproposal.showbidtable.call(this)}
 
                   

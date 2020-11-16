@@ -66,12 +66,7 @@ showinvoices() {
     return( <View style={[styles.generalFlex]}>
         <View style={[styles.flex1]}>
 
-            <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                <View style={[styles.flex1]}>
-                    <Text style={[styles.boldFont, styles.alignCenter, headerFont]}>/{myproject.title}</Text>
-                    <Text style={[styles.boldFont, styles.alignCenter, headerFont]}>/invoices </Text>
-                </View>
-            </View>
+         
 
             {invoices.showmyinvoices.call(this)}
             

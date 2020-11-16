@@ -440,13 +440,7 @@ class MyProjects {
             <View style={[styles.generalFlex]}>
                 <View style={[styles.flex1]}>
 
-                    <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                        <View style={[styles.flex1]}>
-
-                            <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>MyProjects</Text>
-
-                        </View>
-                    </View>
+                
 
                     <View style={[styles.generalFlex, styles.bottomMargin10]}>
                         <View style={[styles.flex1]}>

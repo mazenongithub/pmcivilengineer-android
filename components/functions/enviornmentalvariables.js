@@ -6,7 +6,7 @@ class EnvironmentalVariables {
             development: {
                 stripeClient: 'pk_test_4ZCejPXp1eoTTdAlwpZW3a4M',
                 androidPayMode: 'test',
-                serverAPI: 'http://54.144.213.198:8081'
+                serverAPI: 'http://100.24.2.213:8081'
             },
             production: {
                 stripeClient: 'pk_live_NGJS73N6Hmokpws9S1Qn8Nxs',
