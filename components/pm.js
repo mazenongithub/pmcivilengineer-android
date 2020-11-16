@@ -1159,6 +1159,16 @@ getengineering(projectid) {
         return mytransfers;
     }
    
+    getmainslide() {
+        if (this.state.width > 1200) {
+            return ({ width: 1087, height:1717 })
+        } else if (this.state.width > 800) {
+            return ({ width: 762, height:1203 })
+        } else {
+            return ({ width: 356, height:565 })
+        }
+    }
+
     gettransfersbyprojectid(projectid) {
         const pm = new PM();
         const myproject = pm.getprojectbyid.call(this, projectid)
@@ -1884,7 +1894,7 @@ getengineering(projectid) {
     getinvoicebyid(invoiceid) {
         const pm = new PM();
         let invoices = false;
-        let myproject = pm.getactiveproject.call(this)
+        let myproject = pm.getproject.call(this)
 
         if (myproject.hasOwnProperty("invoices")) {
             myproject.invoices.myinvoice.map(myinvoice => {

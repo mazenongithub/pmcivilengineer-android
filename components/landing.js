@@ -11,7 +11,7 @@ class Landing {
         const myimages = [
             {
                 imageid: 'projectmanagement',
-                uri: require('../slides/logo.png'),
+                uri: require('../slides/myprojects.jpg'),
                 capt: 'Project Management Online by civilengineer.io. Go ahead and start your project now. ',
                 title: 'Project Management Online by civilengineer.io'
 
@@ -19,7 +19,7 @@ class Landing {
 
             {
                 imageid: 'profile',
-                uri: require('../slides/profile.png'),
+                uri: require('../slides/profile.jpg'),
                 capt: 'Create a Profile from the Registration Page. Add your email address, profile, and Google Sign. This gives you access to profile where you may manage your profile . ',
                 title: 'My Profile'
 
@@ -27,7 +27,7 @@ class Landing {
       
             {
                 imageid: 'myprojects',
-                uri: require('../slides/myprojects.png'),
+                uri: require('../slides/myprojects.jpg'),
                 capt: 'Use myprojects to start your project. Define the scope and location.  ',
                 title: 'Create Projects'
 
@@ -35,8 +35,8 @@ class Landing {
         
         
             {
-                imageid: 'milestone_2',
-                uri: require('../slides/milestone_2.png'),
+                imageid: 'milestones',
+                uri: require('../slides/milestoneview.jpg'),
                 capt: 'Add milestones to your project. Milestones have a start and end date. ',
                 title: 'Create Project Milestones'
 
@@ -44,7 +44,7 @@ class Landing {
 
             {
                 imageid: 'criticalpath',
-                uri: require('../slides/criticalpath.png'),
+                uri: require('../slides/criticalpaths.jpg'),
                 capt: 'Set up relationships for your milestones. The program will determine float values for each milestone by looking at the critcal paths',
                 title: 'Critical Paths'
 
@@ -52,7 +52,7 @@ class Landing {
         
             {
                 imageid: 'myteam',
-                uri: require('../slides/myteam.png'),
+                uri: require('../slides/projecteam.jpg'),
                 capt: 'My Team project component is used to add members to your project. Construction Team members have access to enter their costs when they use the Construction App. Design Team members can access the project using the Design App. ',
                 title: 'Project Team'
 
@@ -60,63 +60,36 @@ class Landing {
 
             {
                 imageid: 'specification',
-                uri: require('../slides/specification.png'),
+                uri: require('../slides/engineerspecs.jpg'),
                 capt: 'Engineers deliver the specifications for the project using the Design program.',
                 title: 'Engineers Specifications'
 
             },
             {
                 imageid: 'costestimate',
-                uri: require('../slides/estimate.png'),
+                uri: require('../slides/engineerestimate.jpg'),
                 capt: 'Engineers provide the cost estimate with quantity-takeoff schedule using the Design Program. The Service Provider is expected to match the Specications and match the take-off schedule with their estimate. This is the definition of the work on the project. ',
                 title: 'Engineers Cost Estimate'
 
             },
     
             {
-                imageid: 'proposal_2',
-                uri: require('../slides/proposal_2.png'),
+                imageid: 'proposal',
+                uri: require('../slides/proposalview.jpg'),
                 capt: 'Authorizing Construction Proposal sends an Email Notification to the Service Provider that their proposal has been approved .',
                 title: 'View/Authorize Proposal'
 
             },
     
             {
-                imageid: 'lem',
-                uri: require('../slides/lem.png'),
+                imageid: 'lineitems',
+                uri: require('../slides/lineitems.jpg'),
                 capt: 'Equipment, labor, and materials breakdown for each line item in the contract ',
                 title: 'Labor, Equipment, Material'
 
-            },
-
-            {
-                imageid: 'balance',
-                uri: require('../slides/balance.png'),
-                capt: 'Add balance to your project with Google Pay ',
-                title: 'Add Balnace'
-
-            },
-            {
-                imageid: 'viewinvoice',
-                uri: require('../slides/viewinvoice.png'),
-                capt: 'View Invoice component runs a settlement for the invoice when there are funds avaiable inside the project. The Settlement creates the set of transfers attached to the invoice ',
-                title: 'View Invoice/Before'
-
-            },
-            {
-                imageid: 'settleinvoice',
-                uri: require('../slides/settleinvoice.png'),
-                capt: 'Invoice before settlement as occurred and when there is an outstanding balance for the invoice ',
-                title: 'Settle Invoice/Before'
-
-            },
-            {
-                imageid: 'settlement',
-                uri: require('../slides/settlement.png'),
-                capt: 'Invoice settlement after success. Refresh the App to see the transfer balances. Transfers are recorded after the balance has been successfully moved to their accounts. Transfers are shown on the invoice after payment. Press refresh one-second after completing the settlement. The transfers are managed by Stripe and should be there if a transfer occurred.   ',
-                title: 'Settle Invoice/After'
-
             }
+
+          
          
            ];
         return myimages;
@@ -127,15 +100,16 @@ class Landing {
         const regularFont = pm.getRegularFont.call(this)
         const headerFont = pm.getHeaderFont.call(this)
         const styles = MyStylesheet()
+        const mainslide =pm.getmainslide.call(this)
         const marginLeft = () => {
             return ({ marginLeft: 60 })
         }
         return (
             <View style={[styles.generalFlex, styles.bottomMargin30]}>
-                <View style={[styles.flex1,]}>
+                <View style={[styles.flex1, styles.alignContentCenter]}>
                     <Image source={image.uri}
                         resizeMethod='scale'
-                        style={[styles.slideimage, marginLeft()]}
+                        style={[mainslide, marginLeft()]}
                         key={image.imageid}
                     />
                     <Text style={[headerFont, styles.alignCenter,styles.width90]}>{image.title}</Text>

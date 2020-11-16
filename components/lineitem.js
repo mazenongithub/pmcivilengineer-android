@@ -304,12 +304,7 @@ class LineItem {
             <View style={{ ...styles.generalFlex }}>
                 <View style={{ ...styles.flex1 }}>
 
-                <View style={[styles.generalFlex, styles.bottomMargin10]}>
-                        <View style={[styles.flex1]}>
-                            <Text style={[headerFont, styles.boldFont, styles.alignCenter]}>/{myproject.title}/costestimate/csi/{csi.csi}-{csi.title}</Text>
-                        </View>
-                    </View>
-
+            
                     {lineitem.showlinedetail.call(this)}
                     {projectid.showprojectid.call(this,myproject)}
 
